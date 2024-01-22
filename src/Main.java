@@ -3,6 +3,10 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static void noweZadanie() {
+
+    }
+
     public static void jakasMetoda() {
 
     }
