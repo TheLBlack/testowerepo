@@ -1,81 +1,49 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void noweZadanie() {
+    public static void main1(String[] args) {
+        int[] input = {1, 2, 3, 4, 5, 6, 6, 7, 8, 9, 10, 11, 12};
 
-    }
+        int streak = 1, highestStreak = 1;
+        for (int i = 0; i < input.length - 1; i++) {
+            if (input[i + 1] > input[i]) streak++;
+            else streak = 1;
 
-    public static void jakasMetoda() {
+            if (streak > highestStreak) {
+                highestStreak = streak;
+            }
+        }
 
+        System.out.println("najwiekszy streak wynosi " + highestStreak);
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Podaj ilosc elementow tablicy: ");
 
-        int[] input = new int[10];
-        for (int i = 0; i < 10; i++) {
-            input[i] = scanner.nextInt();
-        }
+        int limit = sc.nextInt();
+        int[] arr = new int[limit];
+        int i = 0;
+        System.out.println("Podaj " + limit + " liczb: ");
+        while (i<limit) {
+            arr[i++] = sc.nextInt();
+        };
 
-        for (int i = 0; i < 10; i++) {
-            int sprawdzamy = input[i];
-
-            for (int j = i+1; j < 10; j++) {
-                if (sprawdzamy == input[j]) System.out.println("duplikat: " + sprawdzamy);
-            }
-        }
+        System.out.println(findLongestChain(arr));
     }
 
-    public static double[] writeNumbersThatRepeat(double... a) {
-        double[] outputNumbers = new double[0];
-        int count = 0;
-        for (int i = 0; i < a.length; i++) {
-            for (int j = i + 1; j < a.length; j++) {
-                if (a[i] == a[j] && checkOutputTable(a[i], outputNumbers)) {
-                    outputNumbers = Arrays.copyOf(outputNumbers, outputNumbers.length + 1);
-                    outputNumbers[count] = a[i];
-                    count++;
-                }
+    private static int findLongestChain(int[] array) {
+        int max = 1, idx=1;
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] > array[i-1]) {
+                ++idx;
+            } else {
+                if (idx>max) max = idx;
+                idx=1;
             }
         }
 
-        return outputNumbers;
-    }
-
-    private static boolean checkOutputTable(double value, double[] outputNumbers) {
-        for (int i = 0; i < outputNumbers.length; i++) {
-            if (outputNumbers[i] == value) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static int[] usunDuplikaty(int[] tablica) {
-        Arrays.sort(tablica);
-        int dlugosc = tablica.length;
-        int rozmiarBezDuplikatow = 1;
-
-        for (int i = 1; i < dlugosc; i++) {
-            if (tablica[i] != tablica[i - 1]) {
-                rozmiarBezDuplikatow++;
-            }
-        }
-
-        int[] tablicaBezDuplikatow = new int[rozmiarBezDuplikatow];
-        tablicaBezDuplikatow[0] = tablica[0];
-
-        int indeks = 1;
-
-        for (int i = 1; i < dlugosc; i++) {
-            if (tablica[i] != tablica[i - 1]) {
-                tablicaBezDuplikatow[indeks] = tablica[i];
-                indeks++;
-            }
-        }
-
-        return tablicaBezDuplikatow;
+        return Math.max(idx, max);
     }
 }
